@@ -18,6 +18,7 @@ class RoomList extends Component {
 
   componentDidMount() {
     this.roomsRef.on('child_added', snapshot => {
+      //console.log(snapshot);
       const room = snapshot.val();
       room.key = snapshot.key;
       this.setState({rooms: this.state.rooms.concat(room)});
@@ -37,9 +38,9 @@ class RoomList extends Component {
   }
 
   createRoom(event) {
+    event.preventDefault();
     this.roomsRef.push({name: this.state.roomName});
     this.setState({roomName: ''});
-    event.preventDefault();
   }
 
   render() {
@@ -68,12 +69,7 @@ class RoomList extends Component {
           effect="fadeInUp"
           onClickAway={() => this.closeModal()}
         >
-          <form
-            className="add-room-form"
-            onSubmit={() => {
-              this.createRoom();
-            }}
-          >
+          <form className="add-room-form" onSubmit={this.createRoom}>
             <label>
               Enter New Room Name:
               <input
@@ -84,11 +80,11 @@ class RoomList extends Component {
                 onChange={this.handleChange}
               />
             </label>
-            <input className="submit-button" type="submit" />
-          </form>
 
+            <input className="submit-button" type="submit" onClick={() => this.closeModal()} />
+          </form>
           <button className="close-modal-button" type="button" onClick={() => this.closeModal()}>
-            Close
+            Cancel
           </button>
         </Modal>
       </div>
