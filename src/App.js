@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import * as firebase from 'firebase';
-import RoomList from './RoomList';
+import RoomList from './components/RoomList';
+import MessageList from './components/MessageList';
 
 var config = {
   apiKey: 'AIzaSyDQ5PE85DJaHxVUQ8XQX4GCgzOyXQFdX6A',
@@ -13,20 +14,28 @@ var config = {
 };
 firebase.initializeApp(config);
 
-const App = () => (
-  <main className="wrapper">
-    <header className="app-title">
-      <h1>Bloc Chat</h1>
-    </header>
-    <section className="rows">
-      <section className="room-list">
-        <RoomList firebase={firebase} />
-      </section>
-      <section className="message-list">
-        <p>Placeholder for Message List</p>
-      </section>
-    </section>
-  </main>
-);
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <main className="wrapper">
+        <header className="app-title">
+          <h1>Bloc Chat</h1>
+        </header>
+        <section className="rows">
+          <section className="room-list">
+            <RoomList firebase={firebase} />
+          </section>
+          <section className="message-list">
+            <MessageList firebase={firebase} />
+          </section>
+        </section>
+      </main>
+    );
+  }
+}
 
 export default App;
