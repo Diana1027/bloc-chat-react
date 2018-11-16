@@ -17,6 +17,20 @@ firebase.initializeApp(config);
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      activeRoom: '',
+      activeRoomID: ''
+    };
+    this.setActiveRoom = this.setActiveRoom.bind(this);
+  }
+
+  setActiveRoom(room) {
+    this.setState({
+      activeRoom: room.name,
+      activeRoomID: room.key,
+    });
+    console.log(room);
   }
 
   render() {
@@ -24,13 +38,18 @@ class App extends Component {
       <main className="wrapper">
         <header className="app-title">
           <h1>Bloc Chat</h1>
+          <h2>Current Room: {this.state.activeRoom}</h2>
         </header>
         <section className="rows">
           <section className="room-list">
-            <RoomList firebase={firebase} />
+            <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
           </section>
           <section className="message-list">
-            <MessageList firebase={firebase} />
+            <MessageList
+              firebase={firebase}
+              activeRoomID={this.state.activeRoomID}
+              activeRoom={this.state.activeRoom}
+            />
           </section>
         </section>
       </main>

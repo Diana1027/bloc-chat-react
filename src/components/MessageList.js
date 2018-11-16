@@ -22,9 +22,19 @@ class MessageList extends Component {
   render() {
     return (
       <section className="messages">
-        {this.state.messages.map(msg => (
-          <p key={msg.key}>{msg.content}</p>
-        ))}
+        <p>
+          Current Room:
+          {this.props.activeRoomID}
+        </p>
+        {this.state.messages
+          .filter(message => message.roomID === this.props.activeRoomID)
+          .map(message => (
+            <div className="message-group" key={message.key}>
+              <div>{message.username}</div>
+              <div>{message.content}</div>
+              <div>{message.sentAt}</div>
+            </div>
+          ))}
       </section>
     );
   }
