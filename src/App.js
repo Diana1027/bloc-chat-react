@@ -20,7 +20,7 @@ class App extends Component {
 
     this.state = {
       activeRoom: '',
-      activeRoomID: ''
+      activeRoomId: ''
     };
     this.setActiveRoom = this.setActiveRoom.bind(this);
   }
@@ -28,9 +28,8 @@ class App extends Component {
   setActiveRoom(room) {
     this.setState({
       activeRoom: room.name,
-      activeRoomID: room.key,
+      activeRoomId: room.key,
     });
-    console.log(room);
   }
 
   render() {
@@ -45,11 +44,7 @@ class App extends Component {
             <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
           </section>
           <section className="message-list">
-            <MessageList
-              firebase={firebase}
-              activeRoomID={this.state.activeRoomID}
-              activeRoom={this.state.activeRoom}
-            />
+            <MessageList firebase={firebase} activeRoomId={this.state.activeRoomId} />
           </section>
         </section>
       </main>
