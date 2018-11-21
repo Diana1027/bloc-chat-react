@@ -3,6 +3,7 @@ import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
+import User from './components/User';
 
 var config = {
   apiKey: 'AIzaSyDQ5PE85DJaHxVUQ8XQX4GCgzOyXQFdX6A',
@@ -10,7 +11,7 @@ var config = {
   databaseURL: 'https://bloc-chat-1027.firebaseio.com',
   projectId: 'bloc-chat-1027',
   storageBucket: 'bloc-chat-1027.appspot.com',
-  messagingSenderId: '905729331918',
+  messagingSenderId: '905729331918'
 };
 firebase.initializeApp(config);
 
@@ -20,9 +21,11 @@ class App extends Component {
 
     this.state = {
       activeRoom: '',
-      activeRoomId: ''
+      activeRoomId: '',
+      user: null,
     };
     this.setActiveRoom = this.setActiveRoom.bind(this);
+    this.setUserName = this.setUserName.bind(this);
   }
 
   setActiveRoom(room) {
@@ -32,12 +35,21 @@ class App extends Component {
     });
   }
 
+  setUserName(user) {
+    this.setState({
+      user: user,
+    });
+  }
+
   render() {
     return (
       <main className="wrapper">
         <header className="app-title">
           <h1>Bloc Chat</h1>
           <h2>Current Room: {this.state.activeRoom}</h2>
+          <section>
+            <User firebase={firebase} user={this.state.user} setUserName={this.setUserName} />
+          </section>
         </header>
         <section className="rows">
           <section className="room-list">
