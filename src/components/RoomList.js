@@ -53,7 +53,6 @@ class RoomList extends Component {
             </p>
           ))}
         </section>
-
         <section>
           <input
             className="add-room-button"

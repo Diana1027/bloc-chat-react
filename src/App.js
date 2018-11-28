@@ -56,7 +56,11 @@ class App extends Component {
             <RoomList firebase={firebase} setActiveRoom={this.setActiveRoom} />
           </section>
           <section className="message-list">
-            <MessageList firebase={firebase} activeRoomId={this.state.activeRoomId} />
+            <MessageList
+              firebase={firebase}
+              activeRoomId={this.state.activeRoomId}
+              user={this.state.user}
+            />
           </section>
         </section>
       </main>
