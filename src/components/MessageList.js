@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './MessageList.css';
 
 class MessageList extends Component {
   constructor(props) {
@@ -50,12 +49,12 @@ class MessageList extends Component {
               <div>{messages.roomID}</div>
             </div>
           ))}
-        <form className="add-message" onSubmit={event => this.createMessage(event)}>
+        <form className="add-message" onSubmit={this.createMessage}>
           <input
             type="text"
             placeholder="Write Your Message Here"
             value={this.state.newMessage}
-            onChange={event => this.handleChange(event)}
+            onChange={this.handleChange}
           />
           <input type="submit" value="Send" />
         </form>
