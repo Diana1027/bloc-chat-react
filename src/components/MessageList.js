@@ -5,7 +5,13 @@ class MessageList extends Component {
     super(props);
 
     this.state = {
-      messages: [],
+      messages: [
+        {
+          username: '',
+          content: '',
+          sentAt: ''
+        },
+      ],
       newMessage: ''
     };
     this.msgRef = this.props.firebase.database().ref('Messages');
@@ -26,7 +32,7 @@ class MessageList extends Component {
     this.msgRef.push({
       content: this.state.newMessage,
       username: this.props.user ? this.props.user.displayName : 'Guest',
-      roomID: this.props.activeRoomId,
+      roomId: this.props.activeRoomId,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
     });
     this.setState({newMessage: ''});
@@ -34,6 +40,15 @@ class MessageList extends Component {
 
   handleChange(event) {
     this.setState({newMessage: event.target.value});
+  }
+
+  formatTime(time) {
+    const date = new Date(time);
+    const hour = date.getHours();
+    const min = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+    const sec = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+    const newTime = hour + ':' + min + ':' + sec;
+    return newTime;
   }
 
   render() {
@@ -45,8 +60,7 @@ class MessageList extends Component {
             <div className="message-group" key={messages.key}>
               <div>{messages.username}</div>
               <div>{messages.content}</div>
-              <div>{messages.sentAt}</div>
-              <div>{messages.roomID}</div>
+              <div>{this.formatTime(messages.sentAt)}</div>
             </div>
           ))}
         <form className="add-message" onSubmit={this.createMessage}>
